@@ -1,0 +1,8 @@
+body{
+    background: rgb(255, 190, 249);
+}
+
+.inline_div {
+    display: inline;
+    color: white;
+}
