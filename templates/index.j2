@@ -14,11 +14,29 @@
 </head>
 
 <body>
-    Mining <div id="speed" class="inline_div">{{ x }}</div> gold / sec
-    </br>
-    <button id="test" type="button">
-        Upgrade mine
-    </button>
+    <form action="" method="post">
+        <div>
+            <label for="name">Pseudo : </label>
+            <input type="text" name="pseudo" required>
+        </div>
+        <div>
+            <input type="submit" value="Se connecter">
+        </div>
+    </form>
+
+    {% if current_user.is_authenticated %}
+    Hi {{ current_user.id }}!
+    {% else %}
+    Hi visitor !
+    {% endif %}
+
+    <div>
+        Mining <div id="speed" class="inline_div">{{ x }}</div> gold / sec
+        </br>
+        <button id="test" type="button">
+            Upgrade mine
+        </button>
+    </div>
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"
         integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
