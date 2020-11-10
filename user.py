@@ -9,6 +9,7 @@ class User:
         self.active = True
         self.anonymous = False
         users[id] = self
+        self.gold = 0
 
     def get_id(self):
         return self.id

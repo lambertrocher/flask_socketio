@@ -1,6 +1,6 @@
 import socketio
 from flask import Flask, render_template, request
-from flask_login import LoginManager, login_user
+from flask_login import LoginManager, login_user, current_user
 from flask_socketio import SocketIO, send, emit
 
 from user import User
@@ -15,7 +15,6 @@ socketio = SocketIO(app=app)
 def load_user(user_id):
     return User.get(user_id)
 
-x = 0
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -27,16 +26,15 @@ def login():
 
 @app.route('/home')
 def home():
-    global x
-    return render_template('index.j2', x=x)
+    return render_template('index.j2', x=0)
 
 
 @socketio.on('my event')
 def handle_message(message):
-    global x
+    print(current_user)
     print('received event: ', message)
-    x += 1
-    emit('my event', x)
+    current_user.gold += 1
+    emit('my event', current_user.gold)
 
 @socketio.on('connect')
 def connect():
