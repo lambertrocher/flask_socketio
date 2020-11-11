@@ -3,15 +3,21 @@ console.log("connecting")
 
 var test = document.getElementById('test');
 test.onclick = function () {
-    socket.emit('my event', {
-        data: 'I\'m connected!'
+    socket.emit('upgrade', {
+        data: 'Upgrading mine'
     });
 }
 
-speed = document.getElementById('speed');
-socket.on('my event', data => {
+mining_speed = document.getElementById('mining_speed');
+socket.on('mining_speed', data => {
     console.log(data);
-    speed.innerText = data;
+    mining_speed.innerText = data;
+  });
+  
+gold = document.getElementById('gold');
+socket.on('gold', data => {
+    console.log(data);
+    gold.innerText = data;
   });
   
   

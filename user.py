@@ -8,7 +8,9 @@ class User:
         self.authenticated = False
         self.active = True
         self.anonymous = False
+        self.client = None
         users[id] = self
+        self.mining_speed = 0
         self.gold = 0
 
     def get_id(self):
@@ -26,3 +28,7 @@ class User:
     @staticmethod
     def get(user_id):
         return users.get(user_id)
+
+    @staticmethod
+    def users():
+        return users
