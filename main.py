@@ -1,5 +1,6 @@
 import socketio
 import time
+import pymongo
 from flask import Flask, render_template, request
 from flask_login import LoginManager, login_user, current_user
 from flask_socketio import SocketIO, send, emit
@@ -7,11 +8,17 @@ from threading import Thread
 
 from user import User
 
-app = Flask(__name__)
-app.secret_key = 'my secret key'
+app = Flask(__name__, instance_relative_config=True)
+app.config.from_pyfile('config.py')
 login_manager = LoginManager()
 login_manager.init_app(app)
 socketio = SocketIO(app=app, async_mode='threading')
+
+client = pymongo.MongoClient(f"mongodb+srv://admin:{app.config['MONGO_PASSWD']}@cluster0.soder.mongodb.net/admin?retryWrites=true&w=majority")
+db = client.sample_airbnb
+listing_and_review = db.listingsAndReviews
+review = listing_and_review.find_one()
+print("review", review)
 
 @login_manager.user_loader
 def load_user(user_id):
