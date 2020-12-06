@@ -1,7 +1,8 @@
+from flask_login.utils import logout_user
 import socketio
 import time
-from flask import Flask, render_template, request
-from flask_login import LoginManager, login_user, current_user
+from flask import Flask, render_template, request, redirect, url_for
+from flask_login import LoginManager, login_user, logout_user, current_user
 from flask_socketio import SocketIO, send, emit
 from threading import Thread
 
@@ -25,11 +26,17 @@ def login():
         user = User(id=request.form["pseudo"], app=app)
         login_user(user)
         # TODO validate flask.request.args.get('next') to prevent vulnerability to open redirect
-        return render_template("index.j2", mining_speed=0, gold=0)
-    return render_template("index.j2", mining_speed=0, gold=0)
+        return render_template("resources.j2", mining_speed=0, gold=0)
+    return render_template("login.j2")
+
+@app.route("/logout", methods=["GET"])
+def logout():
+    print("logging out")
+    logout_user()
+    return redirect(url_for('login'))
 
 
-@socketio.on("upgrade")
+@socketio.on("upgrade") 
 def handle_message(message):
     current_user.set_mining_speed(current_user.get_mining_speed() + 1)
     emit("gold", current_user.get_gold())
