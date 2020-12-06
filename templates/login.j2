@@ -1,5 +1,5 @@
 {% extends "index.j2" %}
-{% block body %}
+{% block main_pannel_content %}
 <form action="" method="post">
     <div>
         <label for="name">Pseudo : </label>
@@ -15,4 +15,4 @@ Hi {{ current_user.id }}!
 {% else %}
 Hi visitor !
 {% endif %}
-{% endblock body %}
+{% endblock main_pannel_content %}

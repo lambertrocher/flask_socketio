@@ -1,5 +1,5 @@
 {% extends "index.j2" %}
-{% block body %}
+{% block main_pannel_content %}
 <div>
     Mining <div id="mining_speed" class="inline_div">{{ mining_speed }}</div> gold / sec
     </br>
@@ -10,9 +10,5 @@
     </button>
 </div>
 
-<script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"
-    integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
-{% if current_user.is_authenticated %}
-<script src="/static/js/scripts.js"></script>
-{% endif %}
-{% endblock body %}
+
+{% endblock main_pannel_content %}
