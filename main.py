@@ -38,9 +38,9 @@ def logout():
 
 @socketio.on("upgrade") 
 def handle_message(message):
-    current_user.set_mining_speed(current_user.get_mining_speed() + 1)
-    emit("gold", current_user.get_gold())
-    emit("mining_speed", current_user.get_mining_speed())
+    current_user.gold.set_speed(current_user.gold.get_speed() + 1)
+    emit("gold", current_user.gold.get_amount())
+    emit("mining_speed", current_user.gold.get_speed())
 
 
 @socketio.on("connect")
@@ -55,8 +55,8 @@ def update_gold_amount():
         time.sleep(sleep_time)
         print("running")
         for user in User.users().values():
-            user.set_gold(user.get_gold() + user.get_mining_speed() * sleep_time)
-            user_gold = user.get_gold()
+            user.gold.set_amount(user.gold.get_amount() + user.gold.get_speed() * sleep_time)
+            user_gold = user.gold.get_amount()
             print(user_gold)
             print("emitting gold", user_gold)
             socketio.emit("gold", user_gold, room=user.client)

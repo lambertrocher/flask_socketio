@@ -1,3 +1,4 @@
+from resources import Resource
 import pymongo
 from flask_login import UserMixin
 
@@ -11,6 +12,7 @@ class User:
         self.active = True
         self.anonymous = False
         self.client = None
+        self.gold = Resource(user=self, name='gold')
 
         self.mongo_client = pymongo.MongoClient(
             f"mongodb+srv://admin:{app.config['MONGO_PASSWD']}@cluster0.soder.mongodb.net/admin?retryWrites=true&w=majority"
@@ -39,18 +41,6 @@ class User:
 
     def is_anonymous(self):
         return self.anonymous
-
-    def set_gold(self, amount):
-        self.user_collection.update_one(filter={'id': self.id}, update={'$set': {'gold': amount}})
-
-    def set_mining_speed(self, amount):
-        self.user_collection.update_one(filter={'id': self.id}, update={'$set': {'mining_speed': amount}})
-
-    def get_gold(self):
-        return self.user_collection.find_one({'id': self.id})['gold']
-
-    def get_mining_speed(self):
-        return self.user_collection.find_one({'id': self.id})['mining_speed']
 
     @staticmethod
     def get(user_id):
