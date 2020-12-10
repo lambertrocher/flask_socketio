@@ -1,9 +1,36 @@
 {% extends "index.j2" %}
 {% block main_pannel_content %}
 <div>
-    Mining <div id="mining_speed" class="inline_div">{{ mining_speed }}</div> gold / sec
+    Mining <div id="mining_speed" class="inline_div">{{ mining_speed }}</div> food / sec
     </br>
-    Amount mined <div id="gold" class="inline_div">{{ gold }}</div> gold
+    Amount mined <div id="food" class="inline_div">{{ food }}</div> food
+    </br>
+    <button id="test" type="button">
+        Upgrade mine
+    </button>
+</div>
+<div>
+    Mining <div id="mining_speed" class="inline_div">{{ mining_speed }}</div> wood / sec
+    </br>
+    Amount mined <div id="wood" class="inline_div">{{ wood }}</div> wood
+    </br>
+    <button id="test" type="button">
+        Upgrade mine
+    </button>
+</div>
+<div>
+    Mining <div id="mining_speed" class="inline_div">{{ mining_speed }}</div> coal / sec
+    </br>
+    Amount mined <div id="coal" class="inline_div">{{ coal }}</div> coal
+    </br>
+    <button id="test" type="button">
+        Upgrade mine
+    </button>
+</div>
+<div>
+    Mining <div id="mining_speed" class="inline_div">{{ mining_speed }}</div> metal / sec
+    </br>
+    Amount mined <div id="metal" class="inline_div">{{ metal }}</div> metal
     </br>
     <button id="test" type="button">
         Upgrade mine

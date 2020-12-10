@@ -1,4 +1,7 @@
 from resources import Resource
+from resources import Resource
+from resources import Resource
+from resources import Resource
 import pymongo
 from flask_login import UserMixin
 
@@ -12,7 +15,10 @@ class User:
         self.active = True
         self.anonymous = False
         self.client = None
-        self.gold = Resource(user=self, name='gold')
+        self.food = Resource(user=self, name='food')
+        self.wood = Resource(user=self, name='wood')
+        self.coal = Resource(user=self, name='coal')
+        self.metal = Resource(user=self, name='metal')
 
         self.mongo_client = pymongo.MongoClient(
             f"mongodb+srv://admin:{app.config['MONGO_PASSWD']}@cluster0.soder.mongodb.net/admin?retryWrites=true&w=majority"
@@ -23,10 +29,16 @@ class User:
         if not self.user_collection.count({'id': self.id}):
             user = {
                 "id": self.id,
-                "mining_speed": 0,
-                "gold": 0,
             }
             self.user_collection.insert_one(user)
+            self.food.set_amount(0)
+            self.food.set_speed(0)
+            self.wood.set_amount(0)
+            self.wood.set_speed(0)
+            self.coal.set_amount(0)
+            self.coal.set_speed(0)
+            self.metal.set_amount(0)
+            self.metal.set_speed(0)
 
         users[id] = self
 

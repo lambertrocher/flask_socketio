@@ -26,21 +26,22 @@ def login():
         user = User(id=request.form["pseudo"], app=app)
         login_user(user)
         # TODO validate flask.request.args.get('next') to prevent vulnerability to open redirect
-        return render_template("resources.j2", mining_speed=0, gold=0)
+        return render_template("resources.j2", mining_speed=0, food=0, wood=0, coal=0, metal=0)
     return render_template("login.j2")
+
 
 @app.route("/logout", methods=["GET"])
 def logout():
     print("logging out")
     logout_user()
-    return redirect(url_for('login'))
+    return redirect(url_for("login"))
 
 
-@socketio.on("upgrade") 
+@socketio.on("upgrade")
 def handle_message(message):
-    current_user.gold.set_speed(current_user.gold.get_speed() + 1)
-    emit("gold", current_user.gold.get_amount())
-    emit("mining_speed", current_user.gold.get_speed())
+    current_user.food.set_speed(current_user.food.get_speed() + 1)
+    emit("food", current_user.food.get_amount())
+    emit("mining_speed", current_user.food.get_speed())
 
 
 @socketio.on("connect")
@@ -55,11 +56,15 @@ def update_gold_amount():
         time.sleep(sleep_time)
         print("running")
         for user in User.users().values():
-            user.gold.set_amount(user.gold.get_amount() + user.gold.get_speed() * sleep_time)
-            user_gold = user.gold.get_amount()
-            print(user_gold)
-            print("emitting gold", user_gold)
-            socketio.emit("gold", user_gold, room=user.client)
+            resources = [user.wood, user.food, user.coal, user.metal]
+            for resource in resources:
+                resource.set_amount(
+                    resource.get_amount() + resource.get_speed() * sleep_time
+                )
+                resource_amount = resource.get_amount()
+                print(resource_amount)
+                print(f"emitting resource {resource.name}", resource_amount)
+                socketio.emit(resource.name, resource_amount, room=user.client)
 
 
 if __name__ == "__main__":
