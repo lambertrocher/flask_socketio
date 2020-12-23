@@ -45,25 +45,21 @@ def logout():
     return redirect(url_for("login"))
 
 
-@socketio.on("upgrade_hunting")
-def upgrade_hunting(message):
-    current_user.food.set_speed(current_user.food.get_speed() + 1)
-    emit("hunting_speed", current_user.food.get_speed())
-
-@socketio.on("upgrade_chopping")
-def upgrade_chopping(message):
-    current_user.wood.set_speed(current_user.wood.get_speed() + 1)
-    emit("chopping_speed", current_user.wood.get_speed())
-
-@socketio.on("upgrade_coal_mining")
-def upgrade_coal_mining(message):
-    current_user.coal.set_speed(current_user.coal.get_speed() + 1)
-    emit("coal_mining_speed", current_user.coal.get_speed())
-
-@socketio.on("upgrade_metal_mining")
-def upgrade_metal_mining(message):
-    current_user.metal.set_speed(current_user.metal.get_speed() + 1)
-    emit("metal_mining_speed", current_user.metal.get_speed())
+@socketio.on("upgrade")
+def upgrade(message):
+    message = message['data']
+    if message == 'upgrade_hunting':
+        current_user.food.set_speed(current_user.food.get_speed() + 1)
+        emit("hunting_speed", current_user.food.get_speed())
+    elif message == 'upgrade_chopping':
+        current_user.wood.set_speed(current_user.wood.get_speed() + 1)
+        emit("chopping_speed", current_user.wood.get_speed())
+    elif message == 'upgrade_coal_mining':
+        current_user.coal.set_speed(current_user.coal.get_speed() + 1)
+        emit("coal_mining_speed", current_user.coal.get_speed())
+    elif message == 'upgrade_metal_mining':
+        current_user.metal.set_speed(current_user.metal.get_speed() + 1)
+        emit("metal_mining_speed", current_user.metal.get_speed())
 
 
 def update_resources():
