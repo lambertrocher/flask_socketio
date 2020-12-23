@@ -20,13 +20,21 @@ def load_user(user_id):
     return User.get(user_id)
 
 
+@socketio.on("connect")
+def connect():
+    emit("my response", {"data": "Connected"})
+    current_user.client = request.sid
+
+
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
         user = User(id=request.form["pseudo"], app=app)
         login_user(user)
         # TODO validate flask.request.args.get('next') to prevent vulnerability to open redirect
-        return render_template("resources.j2", mining_speed=0, food=0, wood=0, coal=0, metal=0)
+        return render_template(
+            "resources.j2", mining_speed=0, food=0, wood=0, coal=0, metal=0
+        )
     return render_template("login.j2")
 
 
@@ -37,27 +45,33 @@ def logout():
     return redirect(url_for("login"))
 
 
-@socketio.on("upgrade")
-def handle_message(message):
+@socketio.on("upgrade_hunting")
+def upgrade_hunting(message):
     current_user.food.set_speed(current_user.food.get_speed() + 1)
-    emit("food", current_user.food.get_amount())
-    emit("mining_speed", current_user.food.get_speed())
+    emit("hunting_speed", current_user.food.get_speed())
+
+@socketio.on("upgrade_chopping")
+def upgrade_chopping(message):
+    current_user.wood.set_speed(current_user.wood.get_speed() + 1)
+    emit("chopping_speed", current_user.wood.get_speed())
+
+@socketio.on("upgrade_coal_mining")
+def upgrade_coal_mining(message):
+    current_user.coal.set_speed(current_user.coal.get_speed() + 1)
+    emit("coal_mining_speed", current_user.coal.get_speed())
+
+@socketio.on("upgrade_metal_mining")
+def upgrade_metal_mining(message):
+    current_user.metal.set_speed(current_user.metal.get_speed() + 1)
+    emit("metal_mining_speed", current_user.metal.get_speed())
 
 
-@socketio.on("connect")
-def connect():
-    emit("my response", {"data": "Connected"})
-    current_user.client = request.sid
-
-
-def update_gold_amount():
+def update_resources():
     sleep_time = 0.5
-    for _ in range(6000):
+    while True:
         time.sleep(sleep_time)
-        print("running")
         for user in User.users().values():
-            resources = [user.wood, user.food, user.coal, user.metal]
-            for resource in resources:
+            for resource in user.resources:
                 resource.set_amount(
                     resource.get_amount() + resource.get_speed() * sleep_time
                 )
@@ -68,7 +82,6 @@ def update_gold_amount():
 
 
 if __name__ == "__main__":
-    print("started with main")
-    thread = Thread(target=update_gold_amount, args=())
+    thread = Thread(target=update_resources, args=())
     thread.start()
     socketio.run(app)

@@ -7,20 +7,20 @@ body{
     color: white;
 }
 .left-menu {
-    background-color: rgb(19, 56, 219);
+    background-color: rgb(3, 22, 107);
     position: absolute;
     top: 0; bottom: 0; left:0;
     width: 20%;
 }
 
 .main-pannel {
-    background-color: rgb(252, 186, 5);
+    background-color: rgb(185, 144, 20);
     position: absolute;
     top: 20%; left: 20%; right: 0; bottom: 0;
 }
 
 .top-pannel {
-    background-color: rgb(11, 235, 85);
+    background-color: rgb(15, 59, 30);
     position: absolute;
     top: 0; left: 20%; right: 0;
     height: 20%;

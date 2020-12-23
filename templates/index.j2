@@ -14,15 +14,15 @@
     <div class="left-menu">
     </div>
     <div class="top-pannel">
-    </div>
-    <div class="main-pannel">
-        {% block main_pannel_content %}
-        {% endblock main_pannel_content %}
         <div>
             <form action="/logout" method="get">
                 <input type="submit" value="Se deconnecter">
         </div>
         </form>
+    </div>
+    <div class="main-pannel">
+        {% block main_pannel_content %}
+        {% endblock main_pannel_content %}
     </div>
     <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"
         integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
