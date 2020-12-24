@@ -59,25 +59,25 @@ def logout():
 @socketio.on("upgrade")
 def upgrade(message):
     message = message["data"]
-    if message == "upgrade_hunting":
+    if message == "hunting":
         current_user.food.set_speed(current_user.food.get_speed() + 1)
         current_user.food.set_level(current_user.food.get_level() + 1)
         emit("hunting_speed", current_user.food.get_speed())
-    elif message == "upgrade_chopping":
+    elif message == "chopping":
         current_user.wood.set_speed(current_user.wood.get_speed() + 1)
         current_user.wood.set_level(current_user.wood.get_level() + 1)
         emit("chopping_speed", current_user.wood.get_speed())
-    elif message == "upgrade_coal_mining":
+    elif message == "coal_mining":
         current_user.coal.set_speed(current_user.coal.get_speed() + 1)
         current_user.coal.set_level(current_user.coal.get_level() + 1)
         emit("coal_mining_speed", current_user.coal.get_speed())
-    elif message == "upgrade_metal_mining":
+    elif message == "metal_mining":
         current_user.metal.set_speed(current_user.metal.get_speed() + 1)
         current_user.metal.set_level(current_user.metal.get_level() + 1)
         emit("metal_mining_speed", current_user.metal.get_speed())
 
 def update_resources():
-    sleep_time = 0.5
+    sleep_time = 2
     while True:
         time.sleep(sleep_time)
         for user in User.users().values():

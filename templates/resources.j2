@@ -1,17 +1,15 @@
 {% extends "index.j2" %}
 {% block main_pannel_content %}
 
-{% for resource in resources %}
-<div>
-    <h3> {{resource.activity_name}} camp lvl <div id="{{resource.activity_name}}_level" class="inline_div"></div> </h3>
-    {{resource.activity_name}} <div id="{{resource.activity_name}}_speed" class="inline_div"></div> {{resource.name}} / sec
+<div v-for="resource in resources">
+    <h3> [[ resource.activity_name ]] camp lvl <div class="inline_div">[[ resource.level ]]</div> </h3>
+    [[ resource.activity_name ]] <div class="inline_div">[[ resource.speed ]]</div> [[ resource.name ]] / sec
     </br>
-    Amount {{resource.activity_name}} <div id="{{resource.name}}" class="inline_div"></div> {{resource.name}}
+    Amount [[ resource.activity_name ]] <div class="inline_div">[[ resource.amount ]]</div> [[ resource.name ]]
     </br>
-    <button id="upgrade_{{resource.activity_name}}" type="button">
-        Upgrade {{resource.activity_name}} camp
+    <button type="button" v-on:click="upgrade(resource.activity_name)">>
+        Upgrade [[ resource.activity_name ]] camp
     </button>
 </div>
-{% endfor %}
 
 {% endblock main_pannel_content %}
