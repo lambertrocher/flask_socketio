@@ -15,10 +15,10 @@ class User:
         self.active = True
         self.anonymous = False
         self.client = None
-        self.food = Resource(user=self, name='food')
-        self.wood = Resource(user=self, name='wood')
-        self.coal = Resource(user=self, name='coal')
-        self.metal = Resource(user=self, name='metal')
+        self.food = Resource(user=self, name='food', activity_name='hunting')
+        self.wood = Resource(user=self, name='wood', activity_name='chopping')
+        self.coal = Resource(user=self, name='coal', activity_name='coal_mining')
+        self.metal = Resource(user=self, name='metal', activity_name='metal_mining')
         self.resources = [self.food, self.wood, self.coal, self.metal]
 
         self.mongo_client = pymongo.MongoClient(
@@ -35,6 +35,7 @@ class User:
             for resource in self.resources:
                 resource.set_amount(0)
                 resource.set_speed(0)
+                resource.set_level(0)
 
         users[id] = self
 

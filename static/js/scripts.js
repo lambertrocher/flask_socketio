@@ -22,12 +22,12 @@ speed_names.forEach(speed_name => {
   });
 })
 
-const resource_names = ['food', 'wood', 'coal', 'metal']
-
-resource_names.forEach(resource_name =>  {
-  const element = document.getElementById(resource_name)
-  socket.on(resource_name, data => {
-    console.log(data);
-    element.innerText = data;
+socket.on("resources", data => {
+  console.log(data);
+  data.forEach(resource =>{
+    const amount = document.getElementById(resource.name);
+    amount.innerText = resource.amount;
+    const level = document.getElementById(`${resource.activity_name}_level`);
+    level.innerText = resource.level;
   })
 })

@@ -1,41 +1,17 @@
 {% extends "index.j2" %}
 {% block main_pannel_content %}
-<div>
-    Hunting <div id="hunting_speed" class="inline_div">{{ hunting_speed }}</div> food / sec
-    </br>
-    Amount hunted <div id="food" class="inline_div">{{ food }}</div> food
-    </br>
-    <button id="upgrade_hunting" type="button">
-        Upgrade hunting camp
-    </button>
-</div>
-<div>
-    Chopping <div id="chopping_speed" class="inline_div">{{ chopping_speed }}</div> wood / sec
-    </br>
-    Amount chopped <div id="wood" class="inline_div">{{ wood }}</div> wood
-    </br>
-    <button id="upgrade_chopping" type="button">
-        Upgrade lumber camp
-    </button>
-</div>
-<div>
-    Mining <div id="coal_mining_speed" class="inline_div">{{ coal_mining_speed }}</div> coal / sec
-    </br>
-    Amount mined <div id="coal" class="inline_div">{{ coal }}</div> coal
-    </br>
-    <button id="upgrade_coal_mining" type="button">
-        Upgrade coal mine
-    </button>
-</div>
-<div>
-    Mining <div id="metal_mining_speed" class="inline_div">{{ metal_mining_speed }}</div> metal / sec
-    </br>
-    Amount mined <div id="metal" class="inline_div">{{ metal }}</div> metal
-    </br>
-    <button id="upgrade_metal_mining" type="button">
-        Upgrade metal mine
-    </button>
-</div>
 
+{% for resource in resources %}
+<div>
+    <h3> {{resource.activity_name}} camp lvl <div id="{{resource.activity_name}}_level" class="inline_div"></div> </h3>
+    {{resource.activity_name}} <div id="{{resource.activity_name}}_speed" class="inline_div"></div> {{resource.name}} / sec
+    </br>
+    Amount {{resource.activity_name}} <div id="{{resource.name}}" class="inline_div"></div> {{resource.name}}
+    </br>
+    <button id="upgrade_{{resource.activity_name}}" type="button">
+        Upgrade {{resource.activity_name}} camp
+    </button>
+</div>
+{% endfor %}
 
 {% endblock main_pannel_content %}
